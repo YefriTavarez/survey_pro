@@ -1,0 +1,77 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<article>
+    <div class="page-header my-3">
+        <h1 class="display-5">
+            {{ _("Past Surveys") }}
+            <small
+                style="
+                    font-size: .5em; 
+                    line-height: 1.5em;
+                "
+                class="text-muted pull-right"
+            >
+                {{ doclist | length }} {{ "Surveys" }}
+            </small>
+        </h1>
+    </div>
+    <br>
+    <div class="container-fluid my-4">
+        {% if doclist %}
+        <div
+            class="row"
+            style="
+                background-color: #efefef; 
+                padding: 15px 10px; 
+                border-radius: 5px;
+            ">
+            <div class="col col-6">
+                {{ _("Survey Title") }}
+            </div>
+
+            <div class="col col-4">
+                <span class="text-left">{{ _("Due Date") }}</span>
+            </div>
+
+            <div class="col col-2 sm-hide">
+                <span class="text-left">{{ _("Status") }}</span>
+            </div>
+        </div>
+        <hr>
+        {% endif %}
+
+        {% for doc in doclist %}
+        <div class="row my-4">
+            <div class="col-6">
+                <a href="{{ doc.route }}">{{ doc.survey_title or doc.name }}</a>
+            </div>
+
+            <div class="col-4">
+                <span class="text-left">{{ format(doc.expiration_date, {"fieldtype": "Date"})  }}</span>
+            </div>
+
+            <div class="col-2">
+                <span class="text-left">{{ doc.status }}</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% if not doclist %}
+        <div style="
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #efefef;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #efefef;
+        ">
+            <h4 class="text-muted">
+                {{ _("Nothing to display") }}
+            </h4>
+        </div>
+
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

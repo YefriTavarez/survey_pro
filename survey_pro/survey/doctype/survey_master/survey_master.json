@@ -1,0 +1,165 @@
+{
+ "actions": [],
+ "autoname": "hash:",
+ "creation": "2022-12-07 22:42:14.875223",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "survey_details_section",
+  "survey_title",
+  "expiration_date",
+  "route",
+  "column_break_5",
+  "status",
+  "published",
+  "survey_template",
+  "hero_section",
+  "introduction",
+  "questions_section",
+  "questions",
+  "filters_section",
+  "based_on",
+  "column_break_14",
+  "participant_users_section",
+  "get_participants",
+  "users"
+ ],
+ "fields": [
+  {
+   "fieldname": "survey_details_section",
+   "fieldtype": "Section Break",
+   "label": "Survey Details"
+  },
+  {
+   "fieldname": "survey_title",
+   "fieldtype": "Data",
+   "label": "Survey Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expiration_date",
+   "fieldtype": "Date",
+   "label": "Expiration Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "Route",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "depends_on": "/*eval:(_ => {\n    const frm = cur_frm\n    \n    const { doc } = frm\n    const { __onload: onload } = doc\n    \n    if (frm.is_new()) {\n        return true\n    }\n    \n    if(\n        (\n            doc.status == \"Published\"\n            && onload.published == false\n        ) || (\n            doc.status != \"Published\"\n            && onload.published == true\n        )\n    ) {\n        frm.reload_doc()\n    }\n\n    return true\n})()*/",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nPublished\nClosed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "survey_template",
+   "fieldtype": "Link",
+   "label": "Survey Template",
+   "options": "Survey Template"
+  },
+  {
+   "depends_on": "eval:(_ => {\n    let display = true;\n    \n    // hide if users table has value\n    if (doc.status !== \"Draft\") {\n       display = false;\n    }\n    \n    // hide if missing all values \n    // when based_on = Training Event\n    if (doc.based_on === \"Training Event\") {\n        if (\n            !doc.training_event \n            && doc.designations\n            && !doc.designations.length\n        ) {\n            display = false;\n        }\n    } else {\n        if (\n            !doc.client\n            && !doc.vertical\n            && !doc.campaign\n            && !doc.branch\n            && !doc.department\n            && doc.designations\n            && !doc.designations.length\n        ) {\n            display = false;\n        }\n    }\n\n    return display;\n})()",
+   "fieldname": "get_participants",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "Get Participants"
+  },
+  {
+   "fieldname": "users",
+   "fieldtype": "Table",
+   "options": "Survey Users"
+  },
+  {
+   "fieldname": "questions_section",
+   "fieldtype": "Section Break",
+   "label": "Questions"
+  },
+  {
+   "fieldname": "questions",
+   "fieldtype": "Table",
+   "options": "Survey Questions"
+  },
+  {
+   "default": "1",
+   "description": "We publish them all and the validate based on the status. This is because the Survey show a 404 once it is closed. We want to let the user know that survey is closed or in draft.",
+   "fieldname": "published",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Published",
+   "no_copy": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "hero_section",
+   "fieldtype": "Section Break",
+   "label": "Hero"
+  },
+  {
+   "fieldname": "introduction",
+   "fieldtype": "Text Editor",
+   "label": "Introduction"
+  }
+ ],
+ "has_web_view": 1,
+ "index_web_pages_for_search": 1,
+ "is_published_field": "published",
+ "links": [
+  {
+   "group": "Responses",
+   "link_doctype": "User Response",
+   "link_fieldname": "survey_master"
+  }
+ ],
+ "modified": "2025-02-04 01:04:58.730308",
+ "modified_by": "Administrator",
+ "module": "Survey",
+ "name": "Survey Master",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Performance Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "survey_title",
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}

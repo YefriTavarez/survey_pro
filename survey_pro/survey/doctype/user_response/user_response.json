@@ -1,0 +1,149 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-01-12 07:37:46.671804",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "full_name",
+  "column_break_13",
+  "response_date",
+  "section_break_15",
+  "survey_master",
+  "survey_title",
+  "unique_survey_title",
+  "question",
+  "question_type",
+  "question_content",
+  "column_break_19",
+  "response_value",
+  "section_break_21",
+  "survey_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "response_date",
+   "fieldtype": "Datetime",
+   "label": "Response Date",
+   "read_only": 1,
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "question",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Question ID",
+   "options": "Survey Question",
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "question_content",
+   "fieldtype": "Small Text",
+   "label": "Question",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "response_value",
+   "fieldtype": "Small Text",
+   "label": "Response Value",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fieldname": "survey_log",
+   "fieldtype": "Link",
+   "label": "Survey Log",
+   "no_copy": 1,
+   "options": "Survey Log",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "user.full_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "survey_master",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Survey",
+   "options": "Survey Master",
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_21",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "question.question_type",
+   "fetch_if_empty": 1,
+   "fieldname": "question_type",
+   "fieldtype": "Select",
+   "label": "Question Type",
+   "options": "Yes or No\nClosed Question\nOpen Question",
+   "read_only_depends_on": "eval:!doc.__islocal"
+  },
+  {
+   "fetch_from": "survey_master.survey_title",
+   "fieldname": "survey_title",
+   "fieldtype": "Data",
+   "label": "Survey Title",
+   "read_only": 1
+  },
+  {
+   "fieldname": "unique_survey_title",
+   "fieldtype": "Select",
+   "label": "Unique Survey Title",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-04 01:42:32.074148",
+ "modified_by": "Administrator",
+ "module": "Survey",
+ "name": "User Response",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "full_name",
+ "track_changes": 1
+}

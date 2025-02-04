@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-12-07 22:30:56.889613",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "notified"
+ ],
+ "fields": [
+  {
+   "fetch_from": "employee.user_id",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "<p><strong>Hint:</strong> You can mark this check if you don't want this User to get an email notification.<br>\nAfter the User gets the email notification you can uncheck this field if you want them to get another email on publish</p>",
+   "fieldname": "notified",
+   "fieldtype": "Check",
+   "label": "Notified"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-02-04 01:27:25.178711",
+ "modified_by": "Administrator",
+ "module": "Survey",
+ "name": "Survey Users",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

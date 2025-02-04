@@ -1,0 +1,36 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2023-01-12 14:22:27.195188",
+ "disable_prepared_report": 1,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "RCCBPO - SALARY",
+ "modified": "2023-04-21 10:48:14.184863",
+ "modified_by": "Administrator",
+ "module": "Survey",
+ "name": "Survey Wise Details",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Survey Master",
+ "report_name": "Survey Wise Details",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Training Manager"
+  },
+  {
+   "role": "Performance Manager"
+  }
+ ]
+}

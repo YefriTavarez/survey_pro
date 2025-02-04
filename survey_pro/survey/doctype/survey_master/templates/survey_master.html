@@ -1,0 +1,223 @@
+{% extends "templates/web.html" %}
+
+{% block header %}
+<style>
+    #survey-form .form-group h3[data-reqd="1"]::after {
+        content: "*";
+        color: #dc3545;
+        font-size: 1.5rem;
+    }
+</style>
+
+<!-- Main Heading -->
+<h1 class="display-5">
+    {% if allow_participation %}
+        {% if is_published or (has_already_participated and is_closed) %}
+            <small>Survey - </small> {{ survey_title }}
+        {% endif %}
+    {% else %}
+        {{ "Not Authorized" }}
+    {% endif %}
+</h1>
+{% endblock %}
+
+{% block page_content %}
+
+{% if allow_participation and not is_draft %}
+    <div class="mt-3" id="response">
+        <div
+            role="alert"
+            class="
+                alert
+                {% if has_already_participated %}
+                    alert-primary
+                {% else %}
+                    {% if not is_closed %}
+                        alert-success
+                    {% else %}
+                        alert-warning
+                    {% endif %}
+                {% endif %}
+            ">
+            {% if has_already_participated %}
+                {{ "You have already participated in this survey" }}
+            {% else %}
+                {% if not is_closed %}
+                    {{ "Thank you for participating in this survey" }}
+                {% else %}
+                    {{ 
+                        "Unfortunately, this poll has closed and you did not have 
+                        a chance to cast your vote. We apologize for any 
+                        inconvenience and invite you to participate in 
+                        our future surveys."
+                    }}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+{% if intro and allow_participation and is_published %}
+<article>
+    {{ intro }}
+</article>
+<hr>
+{% endif %}
+
+<article>
+
+    {% if allow_participation and (is_published or (has_already_participated and is_closed)) %}
+    <form id="survey-form">
+        {% if not has_already_participated %}
+            <button
+                type="submit"
+                class="btn btn-sm btn-primary pull-right"
+            >
+                Save
+            </button>
+            <br><br>
+        {% endif %}
+        {% for question in questions %}
+        {% set question_name = question.name|lower %}
+        <div class="form-group my-6">
+            <h3 
+                {% if not question.optional %}
+                    title="This Question is Mandatory"
+                    data-reqd="1" 
+                {% endif %}
+            >
+                {{ question.question }}
+            </h3>
+            {% if question.question_type == "Yes or No" %}
+            <!-- <<<<< Yes or No START >>>>> -->
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="{{ question_name }}"
+                    id="{{ question_name }}-yes"
+                    data-question="{{ question.name }}"
+                    data-question-content="{{ question.question }}"
+                    data-question-type="{{ question.question_type }}"
+                    onchange="survey_pro.survey.yesorno(event)"
+                    data-value="Yes"
+                    {% if has_already_participated %}
+                        {% if question.answer == "Yes" %}
+                            checked
+                        {% endif %}
+                        disabled
+                    {% endif %}
+                />
+                <label                    
+                    class="form-check-label"
+                    for="{{ question_name }}-yes"
+                >Yes</label>
+            </div>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    onchange="survey_pro.survey.yesorno(event)"
+                    name="{{ question_name }}"
+                    id="{{ question_name }}-no"
+                    data-question="{{ question.name }}"
+                    data-question-content="{{ question.question }}"
+                    data-question-type="{{ question.question_type }}"
+                    data-value="No"
+                    {% if has_already_participated %}
+                        {% if question.answer == "No" %}
+                            checked
+                        {% endif %}
+                        disabled
+                    {% endif %}
+                />
+                <label
+                    class="form-check-label"
+                    for="{{ question_name }}-no"
+                >No</label>
+            </div>
+            <!-- <<<<< Yes or No END >>>>> -->
+            {% elif question.question_type == "Open Question" %}
+            <!-- <<<<< Open Question START >>>>> -->
+            <textarea
+                class="form-control"
+                id="{{ question_name }}"
+                name="{{ question_name }}"
+                data-question="{{ question.name }}"
+                data-question-content="{{ question.question }}"
+                data-question-type="{{ question.question_type }}"
+                onkeyup="survey_pro.survey.textarea(event)"
+                data-value=""
+                {% if has_already_participated %}
+                    disabled
+                {% endif %}
+            >{{ question.answer or "" }}</textarea>
+            <!-- <<<<< Open Question END >>>>> -->
+            {% elif question.question_type == "Closed Question" %}
+            <!-- <<<<< Closed Question START >>>>> -->
+            <div class="form-check-wrapper">
+                {% for option in question.possible_options %}
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        {% if question.is_multiselect %}
+                            type="checkbox"
+                        {% else %}
+                            type="radio"
+                        {% endif %}
+                        name="{{ question_name }}"
+                        data-value="{{ option.option }}"
+                        onchange="survey_pro.survey.checkbox(event)"
+                        data-question="{{ question.name }}"
+                        data-question-content="{{ question.question }}"
+                        data-question-type="{{ question.question_type }}"
+                        id="{{ question_name }}-{{ scrub(option.option) }}"
+                        {% if has_already_participated %}
+                            {% if question.is_multiselect and question.answer and option.option in question.answer.split(",") %}
+                                checked
+                            {% elif not question.is_multiselect and option.option == question.answer %}
+                                checked
+                            {% endif %}
+                            disabled
+                        {% endif %}
+                    />
+                    <label
+                        class="form-check-label"
+                        for="{{ question_name }}-{{ scrub(option.option) }}"
+                    >
+                      {{ option.option }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- <<<<< Closed Question END >>>>> -->
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% if not has_already_participated %}
+            <button
+                type="submit"
+                class="btn btn-sm btn-primary pull-right"
+            >
+                Save
+            </button>
+        {% endif %}
+    </form>
+    {% else %}
+    <div style="
+        height: 40vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    ">
+        <h2 class="text-center">
+            {{ unpublished_message }}
+        </h2>
+    </div>
+    {% endif %}
+</article>
+<script>
+    {% include "survey_pro/survey/doctype/survey_master/templates/survey_master.js" %}
+</script>
+{% endblock %}

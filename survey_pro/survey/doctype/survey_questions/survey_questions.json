@@ -1,0 +1,57 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-12-07 22:14:55.620579",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "question_id",
+  "question",
+  "question_type"
+ ],
+ "fields": [
+  {
+   "columns": 8,
+   "fetch_from": "question_id.question",
+   "fieldname": "question",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Question String",
+   "read_only": 1,
+   "width": "8"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "question_id.question_type",
+   "fieldname": "question_type",
+   "fieldtype": "Data",
+   "label": "Question Type",
+   "read_only": 1,
+   "width": "2"
+  },
+  {
+   "columns": 1,
+   "fieldname": "question_id",
+   "fieldtype": "Link",
+   "label": "Question ID",
+   "options": "Survey Question",
+   "reqd": 1,
+   "width": "2"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-04-25 16:48:10.979072",
+ "modified_by": "Administrator",
+ "module": "Survey",
+ "name": "Survey Questions",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}
