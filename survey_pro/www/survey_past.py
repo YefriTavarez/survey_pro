@@ -17,11 +17,11 @@ def get_doclist():
     """Get the list of surveys where the current user was invited to."""
 
     # allow Administrator to see all surveys
-    additional_conditions = "And employees.user Is Not Null"
+    additional_conditions = "And users.user Is Not Null"
 
     # allow other users to see only their surveys
     if frappe.session.user != "Administrator":
-        additional_conditions = f"And employees.user = {frappe.session.user!r}"
+        additional_conditions = f"And users.user = {frappe.session.user!r}"
 
     return frappe.db.sql(
         f"""
@@ -42,11 +42,11 @@ def get_doclist():
             From
                 `tabSurvey Master` As survey
             Inner Join
-                `tabSurvey Employees` As employees
+                `tabSurvey Users` As users
                 On
-                    employees.parent = survey.name
-                    And employees.parentfield = "employees"
-                    And employees.parenttype = "Survey Master"
+                    users.parent = survey.name
+                    And users.parentfield = "users"
+                    And users.parenttype = "Survey Master"
             Where
                 survey.status = "Closed"
                 {additional_conditions}
@@ -54,14 +54,16 @@ def get_doclist():
     )
 
 
+
 def get_context(context):
     """Get context for the survey."""
 
+    is_guest = frappe.session.user == "Guest",
     context.update({
         "doclist": get_doclist(),
         # utils and others
-        "is_guess": frappe.session.user == "Guest",
-        "show_sidebar": True,
+        "is_guest": is_guest,
+        "show_sidebar": not is_guest,
         "sidebar_items": get_sidebar_items(),
         "scrub": frappe.scrub,
         "format": frappe.format,

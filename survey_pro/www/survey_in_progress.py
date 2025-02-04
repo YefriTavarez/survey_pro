@@ -42,7 +42,7 @@ def get_doclist():
             From
                 `tabSurvey Master` As survey
             Inner Join
-                `tabSurvey Employees` As employees
+                `tabSurvey Users` As employees
                 On
                     employees.parent = survey.name
                     And employees.parentfield = "employees"
@@ -57,11 +57,12 @@ def get_doclist():
 def get_context(context):
     """Get context for the survey."""
 
+    is_guest = frappe.session.user == "Guest",
     context.update({
         "doclist": get_doclist(),
         # utils and others
-        "is_guess": frappe.session.user == "Guest",
-        "show_sidebar": True,
+        "is_guest": is_guest,
+        "show_sidebar": not is_guest,
         "sidebar_items": get_sidebar_items(),
         "scrub": frappe.scrub,
         "format": frappe.format,

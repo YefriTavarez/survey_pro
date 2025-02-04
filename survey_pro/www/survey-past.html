@@ -1,6 +1,25 @@
 {% extends "templates/web.html" %}
 
+
+
 {% block page_content %}
+{% if is_guest %}
+    <div class="container-fluid my-4">
+        <div style="
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #efefef;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #efefef;
+        ">
+            <h4 class="text-muted">
+                {{ _("Please login to view this page") }}
+            </h4>
+        </div>
+    </div>
+{% else %}
 <article>
     <div class="page-header my-3">
         <h1 class="display-5">
@@ -74,4 +93,5 @@
         {% endif %}
     </div>
 </article>
+{% endif %}
 {% endblock %}
