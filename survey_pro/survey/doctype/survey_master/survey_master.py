@@ -100,77 +100,10 @@ class SurveyMaster(WebsiteGenerator):
 
     @frappe.whitelist()
     def get_users(self):
-        """Get users allowed to participate in the survey."""
-
-        conditions = self.get_users_conditions()
-
-        users = frappe.db.sql(f"""
-            SELECT
-                name as user,
-                full_name
-            FROM
-                `tabUser`
-            WHERE
-                {conditions}
-        """, as_dict=True)
-
-        return users
+        ...
 
     def get_users_conditions(self):
-        conditions = list()
-
-        # always on filter
-        conditions += ["status = 'Active'"]
-
-        if self.based_on == "Employee Details":
-            # additional filters
-            if self.client:
-                conditions.append(f"client = {self.client!r}")
-
-            if self.vertical:
-                conditions.append(f"vertical = {self.vertical!r}")
-
-            if self.campaign:
-                conditions.append(f"campaign = {self.campaign!r}")
-
-            if self.branch:
-                conditions.append(f"branch = {self.branch!r}")
-
-            if self.department:
-                doctype = "Department"
-                name = self.department
-                departments = (
-                    name,
-                    *get_descendants_of(doctype, name)
-                )
-
-                if len(departments) == 1:
-                    conditions.append(f"department = {departments[0]!r}")
-                else:
-                    conditions.append(f"department In {departments}")
-
-        elif self.based_on == "Training Event":
-            users = frappe.db.sql_list(f"""
-                SELECT
-                    user
-                FROM
-                    `tabTraining Event Employee`
-                WHERE
-                    parent = {self.training_event!r}
-            """)
-            if not users:
-                frappe.throw("The training event has no users")
-
-            conditions.append(f"name In {tuple(users)}")
-        else:
-            frappe.throw("Invalid based on")
-
-        if self.designations:
-            designations = (d.designation for d in self.designations)
-            designation_list = ", ".join(f"{d!r}" for d in designations)
-            conditions.append(f"designation In ({designation_list})")
-
-        return " And ".join(conditions)
+        ...
 
     def get_questions(self):
         """Get survey question in a format the HTML template can use."""
