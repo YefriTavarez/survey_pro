@@ -44,7 +44,6 @@
     .rate > label:hover ~ input:checked ~ label {
         color: #c59b08;
     }
-    .rate > input:disabled ~ label,
     .rate > input:disabled ~ label:hover,
     .rate > input:disabled ~ label:hover ~ label {
         color: #e4e4e4;
@@ -247,8 +246,8 @@
                     data-question-type="{{ question.question_type }}"
                     id="{{ question_name }}-rate-5"
                     {% if has_already_participated %}
-                        {% if question.answer|int >= 5 %}
-                            checked="checked"
+                        {% if question.answer|int == 5 %}
+                            checked
                         {% endif %}
                         disabled
                     {% endif %}
@@ -265,8 +264,8 @@
                     data-question-type="{{ question.question_type }}"
                     id="{{ question_name }}-rate-4"
                     {% if has_already_participated %}
-                        {% if question.answer|int >= 4 %}
-                        checked="checked"
+                        {% if question.answer|int == 4 %}
+                        checked
                         {% endif %}
                         disabled
                     {% endif %}
@@ -283,8 +282,8 @@
                     data-question-type="{{ question.question_type }}"
                     id="{{ question_name }}-rate-3"
                     {% if has_already_participated %}
-                        {% if question.answer|int >= 3 %}
-                        checked="checked"
+                        {% if question.answer|int == 3 %}
+                        checked
                         {% endif %}
                         disabled
                     {% endif %}
@@ -301,8 +300,8 @@
                     data-question-type="{{ question.question_type }}"
                     id="{{ question_name }}-rate-2"
                     {% if has_already_participated %}
-                        {% if question.answer|int >= 2 %}
-                        checked="checked"
+                        {% if question.answer|int == 2 %}
+                        checked
                         {% endif %}
                         disabled
                     {% endif %}
@@ -319,8 +318,8 @@
                     data-question-type="{{ question.question_type }}"
                     id="{{ question_name }}-rate-1"
                     {% if has_already_participated %}
-                        {% if question.answer|int >= 1 %}
-                        checked="checked"
+                        {% if question.answer|int == 1 %}
+                        checked
                         {% endif %}
                         disabled
                     {% endif %}
