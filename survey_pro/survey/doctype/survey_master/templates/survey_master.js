@@ -130,16 +130,14 @@ frappe.ready(function () {
 
         const { doc } = survey_pro.survey;
         const question_id = target.attr("data-question");
-        if (type === "checkbox") {
+        if (true) {
             const checked_values = parent.find("input:checked")
                 .map(function () {
                     return jQuery(this).attr("data-value");
                 }).toArray();
 
-            console.log({checked_values});
-
             // let's separate by comma all checked values
-            doc[question_id]["user_response"] = checked_values.join(",");
+            doc[question_id]["user_response"] = Math.max(...checked_values);
         } else {
             return;
         }

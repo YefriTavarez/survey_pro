@@ -44,6 +44,12 @@
     .rate > label:hover ~ input:checked ~ label {
         color: #c59b08;
     }
+    .rate > input:disabled ~ label,
+    .rate > input:disabled ~ label:hover,
+    .rate > input:disabled ~ label:hover ~ label {
+        color: #e4e4e4;
+        cursor: not-allowed;
+    }
 </style>
 
 <!-- Main Heading -->
@@ -233,7 +239,6 @@
                 <input
                     type="radio"
                     id="star5"
-                    name="rate"
                     data-value="5"
                     name="{{ question_name }}"
                     onchange="survey_pro.survey.rating(event)"
@@ -243,7 +248,7 @@
                     id="{{ question_name }}-rate-5"
                     {% if has_already_participated %}
                         {% if question.answer|int >= 5 %}
-                            checked
+                            checked="checked"
                         {% endif %}
                         disabled
                     {% endif %}
@@ -252,7 +257,6 @@
                 <input
                     type="radio"
                     id="star4"
-                    name="rate"
                     data-value="4"
                     name="{{ question_name }}"
                     onchange="survey_pro.survey.rating(event)"
@@ -262,7 +266,7 @@
                     id="{{ question_name }}-rate-4"
                     {% if has_already_participated %}
                         {% if question.answer|int >= 4 %}
-                            checked
+                        checked="checked"
                         {% endif %}
                         disabled
                     {% endif %}
@@ -271,7 +275,6 @@
                 <input
                     type="radio"
                     id="star3"
-                    name="rate"
                     data-value="3"
                     name="{{ question_name }}"
                     onchange="survey_pro.survey.rating(event)"
@@ -281,7 +284,7 @@
                     id="{{ question_name }}-rate-3"
                     {% if has_already_participated %}
                         {% if question.answer|int >= 3 %}
-                            checked
+                        checked="checked"
                         {% endif %}
                         disabled
                     {% endif %}
@@ -290,7 +293,6 @@
                 <input
                     type="radio"
                     id="star2"
-                    name="rate"
                     data-value="2"
                     name="{{ question_name }}"
                     onchange="survey_pro.survey.rating(event)"
@@ -300,7 +302,7 @@
                     id="{{ question_name }}-rate-2"
                     {% if has_already_participated %}
                         {% if question.answer|int >= 2 %}
-                            checked
+                        checked="checked"
                         {% endif %}
                         disabled
                     {% endif %}
@@ -309,7 +311,6 @@
                 <input
                     type="radio"
                     id="star1"
-                    name="rate"
                     data-value="1"
                     name="{{ question_name }}"
                     onchange="survey_pro.survey.rating(event)"
@@ -319,7 +320,7 @@
                     id="{{ question_name }}-rate-1"
                     {% if has_already_participated %}
                         {% if question.answer|int >= 1 %}
-                            checked
+                        checked="checked"
                         {% endif %}
                         disabled
                     {% endif %}
