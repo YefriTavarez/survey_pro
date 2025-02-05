@@ -121,4 +121,27 @@ frappe.ready(function () {
             return;
         }
     }
+
+
+    survey_pro.survey.rating = function (event) {
+        const { target: element } = event;
+        const target = jQuery(element);
+        const parent = target.parents("div.rate");
+
+        const { doc } = survey_pro.survey;
+        const question_id = target.attr("data-question");
+        if (type === "checkbox") {
+            const checked_values = parent.find("input:checked")
+                .map(function () {
+                    return jQuery(this).attr("data-value");
+                }).toArray();
+
+            console.log({checked_values});
+
+            // let's separate by comma all checked values
+            doc[question_id]["user_response"] = checked_values.join(",");
+        } else {
+            return;
+        }
+    }
 });

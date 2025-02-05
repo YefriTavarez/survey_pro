@@ -104,7 +104,7 @@
    "fieldname": "question_type",
    "fieldtype": "Select",
    "label": "Question Type",
-   "options": "Yes or No\nClosed Question\nOpen Question",
+   "options": "Yes or No\nClosed Question\nOpen Question\nRating",
    "read_only_depends_on": "eval:!doc.__islocal"
   },
   {

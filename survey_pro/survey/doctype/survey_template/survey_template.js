@@ -69,6 +69,7 @@ class SurveyQuestionDialog extends frappe.ui.Dialog {
 						"Yes or No",
 						"Open Question",
 						"Closed Question",
+						"Rating",
 					],
 					reqd: 1,
 				},
@@ -134,7 +135,7 @@ class SurveyQuestionDialog extends frappe.ui.Dialog {
 				question_type.set_value(doc.question_type);
 				is_multiselect.set_value(doc.is_multiselect);
 
-				console.log({ options, doc });
+				// console.log({ options, doc });
 			});
 	}
 
@@ -153,13 +154,13 @@ class SurveyQuestionDialog extends frappe.ui.Dialog {
 			question_type,
 		});
 
-		console.log({
-			question_id,
-			question,
-			question_type,
-			is_multiselect,
-			options
-		})
+		// console.log({
+		// 	question_id,
+		// 	question,
+		// 	question_type,
+		// 	is_multiselect,
+		// 	options
+		// })
 
 		frm.refresh_field("questions");
 	}
